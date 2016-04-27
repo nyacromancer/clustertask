@@ -1,81 +1,43 @@
+var Holder = React.createClass({
+  displayName: 'Holder',
 
-var restyle = function () {
-    return 'rgb(' + parseInt(Math.random() * 255) + ', ' + parseInt(Math.random() * 255) + ', ' + parseInt(Math.random() * 255) + ')';
-};
-
-var CommentBox = React.createClass({
-    displayName: 'CommentBox',
-
-    getInitialState: function () {
-        return { rng: 0 };
-    },
-    setThing: function () {
-        this.setState({ rng: restyle() });
-    },
-    componentDidMount: function () {
-        setInterval(this.setThing, 1000);
-    },
-
-    render: function () {
-        return React.createElement(
-            'div',
-            { className: 'commentBox' },
-            React.createElement(
-                'h1',
-                { style: { transition: 'color 0.5s ease', color: this.state.rng } },
-                'Comments'
-            ),
-            React.createElement(CommentList, null),
-            React.createElement(CommentForm, null)
-        );
-    }
-});
-var CommentList = React.createClass({
-    displayName: 'CommentList',
-
-    render: function () {
-        return React.createElement(
-            'div',
-            { className: 'commentList' },
-            React.createElement(
-                Comment,
-                { author: 'Pete Hunt' },
-                'This is one comment'
-            ),
-            React.createElement(
-                Comment,
-                { author: 'Jordan Walke' },
-                'This is *another* comment'
-            )
-        );
-    }
+  render: function () {
+    return React.createElement(
+      'div',
+      { className: 'container', style: { border: '1px solid', height: 120 } },
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null),
+      React.createElement(Progressbar, null)
+    );
+  }
 });
 
-var CommentForm = React.createClass({
-    displayName: 'CommentForm',
+var Progressbar = React.createClass({
+  displayName: 'Progressbar',
 
-    render: function () {
-        return React.createElement(
-            'div',
-            { className: 'commentForm' },
-            'Hello, world! I am a CommentForm.'
-        );
-    }
+  getInitialState: function () {
+    return { progress: 0 };
+  },
+  setThing: function () {
+    cur = this.state.progress;
+    this.setState({ progress: (this.state.progress + Math.random()) % 100 });
+  },
+  componentDidMount: function () {
+    setInterval(this.setThing, 100);
+  },
+  render: function () {
+    return React.createElement(
+      'div',
+      null,
+      React.createElement('div', { style: { border: '1px solid green', height: 10, background: 'gray', width: this.state.progress + '%' } })
+    );
+  }
 });
-var Comment = React.createClass({
-    displayName: 'Comment',
-
-    render: function () {
-        return React.createElement(
-            'div',
-            { className: 'comment' },
-            React.createElement(
-                'h2',
-                { className: 'commentAuthor' },
-                this.props.author
-            ),
-            this.props.children
-        );
-    }
-});
-ReactDOM.render(React.createElement(CommentBox, null), $('#example')[0]);
+ReactDOM.render(React.createElement(Holder, null), $('#example')[0]);

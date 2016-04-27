@@ -1,60 +1,38 @@
-
-var restyle = function () {
-      return  'rgb(' + parseInt(Math.random() * 255) + ', ' + parseInt(Math.random() * 255) + ', ' + parseInt(Math.random() * 255) + ')'
-};
-
-var CommentBox = React.createClass({
-    getInitialState: function() {
-      return {rng: 0};
-    },
-    setThing: function(){
-      this.setState({rng: restyle() })
-    },
-    componentDidMount: function() { setInterval(this.setThing,1000)},
-
-    render: function () {
-        return (
-            <div className="commentBox">
-                <h1 style={{transition: 'color 0.5s ease',color: this.state.rng}}>Comments</h1>
-                <CommentList />
-                <CommentForm />
-            </div>
-        );
-    }
-});
-var CommentList = React.createClass({
-    render: function () {
-        return (
-            <div className="commentList">
-                <Comment author="Pete Hunt">This is one comment</Comment>
-                <Comment author="Jordan Walke">This is *another* comment</Comment>
-            </div>
-        );
-    }
+var Holder = React.createClass({
+  render: function(){
+    return(
+    <div className="container" style={{border:'1px solid',height:120}}>
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+        <Progressbar />
+    </div>
+    )
+  }
 });
 
-var CommentForm = React.createClass({
-    render: function () {
-        return (
-            <div className="commentForm">
-                Hello, world! I am a CommentForm.
-            </div>
-        );
-    }
-});
-var Comment = React.createClass({
-    render: function () {
-        return (
-            <div className="comment">
-                <h2 className="commentAuthor">
-                    {this.props.author}
-                </h2>
-                {this.props.children}
-            </div>
-        );
-    }
+var Progressbar = React.createClass({
+  getInitialState: function() {
+    return {progress:0};
+  },
+  setThing: function(){
+    cur = this.state.progress;
+    this.setState({progress: (this.state.progress+Math.random())%100 })
+  },
+  componentDidMount: function() { setInterval(this.setThing,100)},
+  render: function(){
+    return(
+        <div><div style={{ border:'1px solid green',height:10, background: 'gray', width:this.state.progress+'%'}}></div></div>
+    )
+  }
 });
 ReactDOM.render(
-    <CommentBox />,
+    <Holder />,
     $('#example')[0]
 );
